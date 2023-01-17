@@ -1,0 +1,140 @@
+import tensorflow as tf
+from tensorflow import keras
+from sklearn.datasets import  load_boston
+from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.losses import mean_squared_error,mean_absolute_error
+import matplotlib.pyplot as plt
+
+boston_data=load_boston()
+x=boston_data.data
+y=boston_data.target
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+print(x.shape,x_train.shape,x_test.shape)
+
+# Define the model
+model = keras.Sequential()
+model.add(keras.layers.Dense(64, activation='relu', input_shape=(x_train.shape[1],)))
+model.add(keras.layers.Dense(64, activation='relu'))
+model.add(keras.layers.Dense(1))
+
+model.compile(optimizer='adam',
+             loss='mean_squared_error',
+             metrics=['mae'])
+
+history=model.fit(x_train,y_train, epochs=100, validation_data=(x_test,y_test))
+
+test_loss,test_mae=model.evaluate(x_test,y_test)
+
+prediction=model.predict(x_test)
+
+model = keras.Sequential()
+model.add(keras.layers.Dense(64, activation='relu', input_shape=(x_train.shape[1],)))
+model.add(keras.layers.Dense(64, activation='relu'))
+model.add(keras.layers.Dense(64, activation='relu'))
+model.add(keras.layers.Dense(1))
+
+model = keras.Sequential()
+model.add(keras.layers.Dense(128, activation='relu', input_shape=(x_train.shape[1],)))
+model.add(keras.layers.Dense(128, activation='relu'))
+model.add(keras.layers.Dense(1))
+
+print('accuracy:',test_mae)
+
+
+
+
+
+
+
+
+
+# Define the model
+model = keras.Sequential()
+model.add(keras.layers.Dense(64, activation='relu', input_shape=(x_train.shape[1],)))
+model.add(keras.layers.Dense(64, activation='relu'))
+model.add(keras.layers.Dense(1))
+
+model.compile(optimizer='adam',
+             loss='mean_squared_error',
+             metrics=['mae'])
+
+history=model.fit(x_train,y_train, epochs=100, validation_data=(x_test,y_test))
+
+plt.plot(history.history['mae'])
+plt.plot(history.history['val_mae'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train','Validation'],loc='upper left')
+plt.show()
+
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('Epoch')
+plt.legend(['Train','Validation'],loc='upper left')
+plt.show()
+
+
+
+
+import tensorflow as tf
+from tensorflow import keras
+from sklearn.datasets import  load_boston
+from sklearn.model_selection import train_test_split
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.losses import mean_squared_error,mean_absolute_error
+
+
+boston_data=load_boston()
+x=boston_data.data
+y=boston_data.target
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+print(x.shape,x_train.shape,x_test.shape)
+
+# Define the model
+model = keras.Sequential()
+model.add(keras.layers.Dense(64, activation='relu', input_shape=(x_train.shape[1],)))
+model.add(keras.layers.Dense(64, activation='relu'))
+model.add(keras.layers.Dense(1))
+
+model.compile(optimizer='adam',
+             loss='mean_squared_error')
+
+test_loss=model.fit(x_train,y_train, epochs=100, validation_data=(x_test,y_test))
+
+predictions=model.predict(x_test)
+
+mse=mean_squared_error(y_test,predictions)
+
+mae=mean_absolute_error(y_test,predictions)
+
+print('mse value:',mse)
+print('mae value:',mae)
+
+
+
+
+# Define the model
+model = keras.Sequential()
+model.add(keras.layers.Dense(64, activation='relu', input_shape=(x_train.shape[1],)))
+model.add(keras.layers.Dense(64, activation='relu'))
+model.add(keras.layers.Dense(1))
+
+model.compile(optimizer='adam',
+             loss='mean_squared_error')
+
+test_loss=model.fit(x_train,y_train, epochs=100, validation_data=(x_test,y_test))
+
+predictions=model.predict(x_test)
+
+print('predicted value:',predictions.flatten())
+print('real value:',y_test)
+
+
